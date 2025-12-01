@@ -2,30 +2,17 @@
 
 int processRLine(const std::string &line)
 {
-    // Placeholder for processing lines that start with 'R'
     int rValue = 0;
-    if (parse_numeric_suffix_strtol(line, rValue))
-    {
-        // std::cout << "  extracted R value: " << rValue << std::endl;
-    }
-    else
-    {
+    if (!parse_numeric_suffix_strtol(line, rValue))
         std::cout << "  no numeric suffix found for R line" << std::endl;
-    }
     return rValue;
 }
 
 int processLLine(const std::string &line)
 {
-    // Placeholder for processing lines that start with 'L'
     int lValue = 0;
-    if (parse_numeric_suffix_strtol(line, lValue))
-    {
-    }
-    else
-    {
+    if (!parse_numeric_suffix_strtol(line, lValue))
         std::cout << "  no numeric suffix found for L line" << std::endl;
-    }
     return lValue;
 }
 
