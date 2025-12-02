@@ -1,113 +1,92 @@
-#include "aoc.hpp"
+#include "Day01.hpp"
+#include "utils.hpp"
+#include <iostream>
 
-int processRLine(const std::string &line)
-{
+Day01::Day01() : Day("day01.input") {
+}
+
+Day01::~Day01() {
+}
+
+int Day01::processRLine(const std::string &line) {
     int rValue = 0;
-    if (!parse_numeric_suffix_strtol(line, rValue))
-        std::cout << "  no numeric suffix found for R line" << std::endl;
+    if (!parse_numeric_suffix_strtol(line, rValue)) {
+        std::cerr << "Warning: no numeric suffix found for R line: " << line << std::endl;
+    }
     return rValue;
 }
 
-int processLLine(const std::string &line)
-{
+int Day01::processLLine(const std::string &line) {
     int lValue = 0;
-    if (!parse_numeric_suffix_strtol(line, lValue))
-        std::cout << "  no numeric suffix found for L line" << std::endl;
+    if (!parse_numeric_suffix_strtol(line, lValue)) {
+        std::cerr << "Warning: no numeric suffix found for L line: " << line << std::endl;
+    }
     return lValue;
 }
 
-int day01Part1()
-{
+int Day01::part1() {
     int result = 0;
     int currentDial = 50;
-    const std::string filename = "input.task";
-    std::ifstream in(filename);
-    if (!in.is_open())
-    {
-        std::cerr << "Failed to open file: " << filename << std::endl;
-        return 1;
-    }
 
-    std::string line;
-    while (std::getline(in, line))
-    {
-        if (line[0] == 'R')
-        {
+    for (size_t i = 0; i < _lines.size(); ++i) {
+        const std::string& line = _lines[i];
+
+        if (line.empty()) continue; 
+
+        if (line[0] == 'R') {
             int dialNumber = processRLine(line);
             currentDial += dialNumber;
             currentDial %= 100;
-            if (currentDial == 0)
-            {
+            if (currentDial == 0) {
                 result++;
             }
-        }
-        else
-        {
+        } else {
             int dialNumber = processLLine(line);
-            while (currentDial - dialNumber < 0)
-            {
+            while (currentDial - dialNumber < 0) {
                 currentDial += 100;
             }
             currentDial -= dialNumber;
-            if (currentDial == 0)
-            {
+            if (currentDial == 0) {
                 result++;
             }
         }
     }
-    if (in.bad())
-    {
-        std::cerr << "I/O error while reading file." << std::endl;
-        return 2;
-    }
-    std::cout << "Day01 part 1: " << result << std::endl;
-    return 0;
+    return result;
 }
 
-int day01Part2()
-{
+int Day01::part2() {
     int result = 0;
     int currentDial = 50;
-    const std::string filename = "input.task";
-    std::ifstream in(filename);
-    if (!in.is_open())
-    {
-        std::cerr << "Failed to open file: " << filename << std::endl;
-        return 1;
-    }
 
-    std::string line;
-    while (std::getline(in, line))
-    {
-        if (line[0] == 'R')
-        {
+    for (size_t i = 0; i < _lines.size(); ++i) {
+        const std::string& line = _lines[i];
+
+        if (line.empty()) continue;
+
+        if (line[0] == 'R') {
             int amount = processRLine(line);
-            if (currentDial + amount >= 100)
-            {
+            if (currentDial + amount >= 100) {
                 result += ((currentDial + amount) / 100);
             }
+            
             currentDial = (currentDial + amount) % 100;
-        }
-        else
-        {
-            int amount = processLLine(line);
+
+        } else {
+            int amount = processLLine(line);        
             int distanceToFirstZero = (currentDial == 0) ? 100 : currentDial;
-            if (amount >= distanceToFirstZero)
-            {
-                result++;
+
+            if (amount >= distanceToFirstZero) {
+                result++; 
+                
                 int remainingAmount = amount - distanceToFirstZero;
                 result += (remainingAmount / 100);
             }
+
             currentDial = (currentDial - amount) % 100;
-            if (currentDial < 0)
+            if (currentDial < 0) {
                 currentDial += 100;
+            }
         }
     }
-    if (in.bad())
-    {
-        std::cerr << "I/O error while reading file." << std::endl;
-        return 2;
-    }
-    std::cout << "Day01 part 2 result: " << result << std::endl;
-    return 0;
+    return result;
 }

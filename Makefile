@@ -20,11 +20,11 @@ OBJ_DIR = obj
 # === Files ===
 
 # List of all source (.cpp) files
-SRCS = aoc.cpp day01.cpp utils.cpp
+SRCS = aoc.cpp utils.cpp $(wildcard Day*.cpp)
 
 
 # List of all header (.hpp) files for dependency tracking
-HEADERS = aoc.hpp day01.hpp utils.hpp
+HEADERS = utils.hpp $(wildcard Day*.hpp)
 
 
 # Generate the list of object files from the source files
