@@ -1,4 +1,4 @@
-#include "aoc.hpp"
+#include "utils.hpp"
 
 // Try to find the first digit in the string and return the substring from there
 static size_t find_first_digit(const std::string &s) {

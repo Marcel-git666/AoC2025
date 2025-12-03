@@ -7,7 +7,7 @@ NAME = aoc
 CC = c++
 
 # Compiler flags as per the subject requirements
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++11
 
 # === Directories ===
 

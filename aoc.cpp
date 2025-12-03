@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Day01.hpp"
+#include "Day02.hpp"
 
 int main() {
     std::cout << "=== ADVENT OF CODE 2025 ===" << std::endl;
@@ -10,9 +11,9 @@ int main() {
     day01.solve(); 
 
     
-    // std::cout << "\n[Day 02]" << std::endl;
-    // Day02 day02;
-    // day02.solve();
+    std::cout << "\n[Day 02]" << std::endl;
+    Day02 day02;
+    day02.solve();
 
     return 0;
 }

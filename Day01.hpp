@@ -6,15 +6,13 @@
 class Day01 : public Day {
 public:
     Day01(); 
-    virtual ~Day01();
-
+    
 protected:
-    virtual int part1();
-    virtual int part2();
+    int part1() override;
+    int part2() override;
 
 private:
-    int processRLine(const std::string &line);
-    int processLLine(const std::string &line);
+    int getRotationAmount(const std::string &line);
 };
 
 #endif

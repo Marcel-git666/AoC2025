@@ -1,19 +1,18 @@
-#ifndef DAY01_HPP
-#define DAY01_HPP
+#ifndef DAY02_HPP
+#define DAY02_HPP
 
 #include "Day.hpp"
 
-class Day02 : public Day {
+class Day02 : public Day
+{
 public:
     Day02();
-    virtual ~Day02();
 
 protected:
-    virtual int part1();
-    virtual int part2();
+    int part1() override;
+    int part2() override;
 
 private:
-    
 };
 
 #endif

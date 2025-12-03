@@ -1,78 +1,95 @@
 #include "Day02.hpp"
 #include "utils.hpp"
 #include <iostream>
+#include <sstream>
 
-Day02::Day02() : Day("day02.input") {
+Day02::Day02() : Day("day02.input")
+{
 }
 
-Day02::~Day02() {
-}
+int Day02::part1()
+{
+    long long result = 0;
+    std::stringstream ss(lines_[0]);
+    std::string segment;
+    while (std::getline(ss, segment, ','))
+    {
+        size_t dashPos = segment.find('-');
 
+        if (dashPos != std::string::npos)
+        {
+            std::string startStr = segment.substr(0, dashPos);
+            std::string endStr = segment.substr(dashPos + 1);
+            long long start = std::stoll(startStr);
+            long long end = std::stoll(endStr);
 
-
-int Day01::part1() {
-    int result = 0;
-    int currentDial = 50;
-
-    for (size_t i = 0; i < _lines.size(); ++i) {
-        const std::string& line = _lines[i];
-
-        if (line.empty()) continue; 
-
-        if (line[0] == 'R') {
-            int dialNumber = processRLine(line);
-            currentDial += dialNumber;
-            currentDial %= 100;
-            if (currentDial == 0) {
-                result++;
-            }
-        } else {
-            int dialNumber = processLLine(line);
-            while (currentDial - dialNumber < 0) {
-                currentDial += 100;
-            }
-            currentDial -= dialNumber;
-            if (currentDial == 0) {
-                result++;
+            for (long long i = start; i <= end; ++i)
+            {
+                std::string s = std::to_string(i);
+                if (s.length() % 2 != 0)
+                    continue;
+                int halfLen = s.length() / 2;
+                std::string firstHalf = s.substr(0, halfLen);
+                std::string secondHalf = s.substr(halfLen);
+                if (firstHalf == secondHalf)
+                {
+                    // std::cout << "Found invalid ID: " << s << std::endl;
+                    result += i;
+                }
             }
         }
     }
-    return result;
+    std::cout << result << std::endl;
+    return 0;
 }
 
-int Day01::part2() {
-    int result = 0;
-    int currentDial = 50;
+int Day02::part2()
+{
+    long long result = 0;
+    std::stringstream ss(lines_[0]);
+    std::string segment;
+    while (std::getline(ss, segment, ','))
+    {
+        size_t dashPos = segment.find('-');
 
-    for (size_t i = 0; i < _lines.size(); ++i) {
-        const std::string& line = _lines[i];
+        if (dashPos != std::string::npos)
+        {
+            std::string startStr = segment.substr(0, dashPos);
+            std::string endStr = segment.substr(dashPos + 1);
+            long long start = std::stoll(startStr);
+            long long end = std::stoll(endStr);
 
-        if (line.empty()) continue;
-
-        if (line[0] == 'R') {
-            int amount = processRLine(line);
-            if (currentDial + amount >= 100) {
-                result += ((currentDial + amount) / 100);
-            }
-            
-            currentDial = (currentDial + amount) % 100;
-
-        } else {
-            int amount = processLLine(line);        
-            int distanceToFirstZero = (currentDial == 0) ? 100 : currentDial;
-
-            if (amount >= distanceToFirstZero) {
-                result++; 
-                
-                int remainingAmount = amount - distanceToFirstZero;
-                result += (remainingAmount / 100);
-            }
-
-            currentDial = (currentDial - amount) % 100;
-            if (currentDial < 0) {
-                currentDial += 100;
+            for (long long i = start; i <= end; ++i)
+            {
+                std::string s = std::to_string(i);
+                int l = s.length();
+                int patternLen = 1;
+                while (patternLen <= l / 2)
+                {
+                    if (l % patternLen == 0)
+                    {
+                        std::string pattern = s.substr(0, patternLen);
+                        bool allMatch = true;
+                        for (int pos = patternLen; pos < l; pos += patternLen)
+                        {
+                            if (s.substr(pos, patternLen) != pattern)
+                            {
+                                allMatch = false;
+                                break;
+                            }
+                        }
+                        if (allMatch)
+                        {
+                            // std::cout << "Found invalid ID: " << s << std::endl;
+                            result += i;
+                            break;
+                        }
+                    }
+                    patternLen++;
+                }
             }
         }
     }
-    return result;
+    std::cout << result << std::endl;
+    return 0;
 }
