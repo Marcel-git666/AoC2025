@@ -1,5 +1,8 @@
 aoc
 
+*.input
+*.test
+
 # Prerequisites
 *.d
 
